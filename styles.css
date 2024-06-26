@@ -1,0 +1,208 @@
+@property --progress-value {
+  syntax: '<integer>';
+  inherits: true;
+  initial-value: 0;
+}
+
+:root {
+  --progress-bar-color: #cfd8dc;
+  --progress-value-color: #2196f3;
+  --progress-empty-color-h: 4.1;
+  --progress-empty-color-s: 89.6;
+  --progress-empty-color-l: 58.4;
+  --progress-filled-color-h: 122.4;
+  --progress-filled-color-s: 39.4;
+  --progress-filled-color-l: 49.2;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  text-align: center;
+  overflow-x: hidden;
+  /* Prevent horizontal scrolling */
+  position: relative;
+  /* Establish positioning context */
+}
+
+header {
+  background-color: #333;
+  color: #fff;
+  padding: 20px;
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  /* Fixed position to stay at the top */
+  top: 0;
+  z-index: 1000;
+  /* Ensure header stays above other content */
+}
+
+nav {
+  background-color: #444;
+  padding: 10px;
+  width: 100%;
+  position: fixed;
+  /* Fixed position to stay below the header */
+  top: 60px;
+  /* Adjust based on header height */
+}
+
+main {
+  margin-top: 100px;
+  /* Ensure content starts below header and nav */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  /* Allow main to grow to fill remaining space */
+  overflow-y: auto;
+  /* Allow main to scroll vertically if needed */
+  width: 100%;
+  max-width: 100%;
+}
+
+.scroll-container {
+  flex-grow: 1;
+  /* Allow container to grow within main */
+  overflow-y: auto;
+  /* Allow container to scroll if needed */
+  width: 100%;
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+nav ul li {
+  display: inline;
+  margin-right: 10px;
+}
+
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+section {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.progress-container {
+  height: 100%;
+  margin: 20px 0;
+  /* Adjust as needed */
+  padding-bottom: 50px;
+  /* Ensure space below progress bars for footer */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 100%;
+  max-width: 100vw;
+  /* Ensure it doesn't exceed viewport width */
+}
+
+.progress-item {
+  width: 100%;
+  max-width: 600px;
+  /* Ensures the container width */
+  margin-bottom: 20px;
+}
+
+progress[value] {
+  display: block;
+  position: relative;
+  appearance: none;
+  width: 100%;
+  /* Ensures the progress bar takes the full width */
+  height: 20px;
+  /* Adjust height if needed */
+  border: 0;
+  --border-radius: 10px;
+  border-radius: var(--border-radius);
+  counter-reset: progress var(--progress-value);
+  --progress-value-string: counter(progress) '%';
+  --progress-max-decimal: calc(var(--value, 0) / var(--max, 0));
+  --progress-value-decimal: calc(var(--progress-value, 0) / var(--max, 0));
+
+  @supports selector(::-moz-progress-bar) {
+    --progress-value-decimal: calc(var(--value, 0) / var(--max, 0));
+  }
+
+  --progress-value-percent: calc(var(--progress-value-decimal) * 100%);
+  --progress-value-color: hsl(calc((var(--progress-empty-color-h) + (var(--progress-filled-color-h) - var(--progress-empty-color-h)) * var(--progress-value-decimal)) * 1deg) calc((var(--progress-empty-color-s) + (var(--progress-filled-color-s) - var(--progress-empty-color-s)) * var(--progress-value-decimal)) * 1%) calc((var(--progress-empty-color-l) + (var(--progress-filled-color-l) - var(--progress-empty-color-l)) * var(--progress-value-decimal)) * 1%));
+  animation: calc(3s * var(--progress-max-decimal)) linear 0.5s 1 normal both progress;
+}
+
+progress[value]::-webkit-progress-bar {
+  background-color: var(--progress-bar-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+progress[value]::-webkit-progress-value {
+  width: var(--progress-value-percent) !important;
+  background-color: var(--progress-value-color);
+  border-radius: var(--border-radius);
+}
+
+progress[value]::-moz-progress-bar {
+  width: var(--progress-value-percent) !important;
+  background-color: var(--progress-value-color);
+  border-radius: var(--border-radius);
+}
+
+progress[value]::after {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  --size: 32px;
+  width: var(--size);
+  height: var(--size);
+  position: absolute;
+  left: var(--progress-value-percent);
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--progress-value-color);
+  border-radius: 50%;
+  content: attr(value);
+  content: var(--progress-value-string, var(--value));
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+@keyframes progress {
+  from {
+    --progress-value: 0;
+  }
+
+  to {
+    --progress-value: var(--value);
+  }
+}

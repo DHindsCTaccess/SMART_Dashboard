@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>SMART Goal Dashboard</h1>
+    </header>
+    <nav></nav>
+    <main>
+        <section>
+            <h2>Welcome to the SMART Goal Dashboard</h2>
+            <p>View each employee's current progress in their quarterly SMART goals here.</p>
+            <div>
+                <label for="team-select">Select Team:</label>
+                <select id="team-select">
+                    <option value="all">All Teams</option>
+                    <option value="IT">IT Team</option>
+                    <option value="Admin">Admin Team</option>
+                    <option value="BPA">BPA Team</option>
+                </select>
+            </div>
+        </section>
+
+        <div class="scroll-container">
+            <div class="progress-container" id="progress-container">
+                <!-- Progress bars will be dynamically inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 CTaccess. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

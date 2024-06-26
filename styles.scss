@@ -1,0 +1,49 @@
+// Define variables
+$primary-color: #333;
+$secondary-color: #444;
+$background-color: #f0f0f0;
+$text-color: #fff;
+
+// CSS Styles
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: $background-color;
+}
+header {
+    background-color: $primary-color;
+    color: $text-color;
+    padding: 20px;
+    text-align: center;
+}
+nav {
+    background-color: $secondary-color;
+    padding: 10px;
+    ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        li {
+            display: inline;
+            margin-right: 10px;
+            a {
+                color: $text-color;
+                text-decoration: none;
+            }
+        }
+    }
+}
+section {
+    padding: 20px;
+}
+footer {
+    background-color: $primary-color;
+    color: $text-color;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
