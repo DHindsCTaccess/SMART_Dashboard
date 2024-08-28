@@ -48,7 +48,7 @@ window.addEventListener('load', function () {
 
 function initiateLogin() {
     const clientId = 'b493f960-3a0e-4a02-89f7-b09b9db97a1c';
-    const redirectUri = 'http://127.0.0.1:5501/index.html';
+    const redirectUri = 'https://dhindsctaccess.github.io/SMART_Dashboard/index.html';
     const customerId = '961460947';
     const scope = 'repository.Read';
     const state = generateRandomState(16);
@@ -96,7 +96,7 @@ if (code && returnedState === storedState) {
 function exchangeCodeForTokens(code) {
     const clientId = 'b493f960-3a0e-4a02-89f7-b09b9db97a1c';
     const clientSecret = 'IMWG2oT22FVY6kFXh7jnVVk7Ujez82TsRwe9y3OpjCyxXL8G';
-    const redirectUri = 'http://127.0.0.1:5501/index.html';
+    const redirectUri = 'https://dhindsctaccess.github.io/SMART_Dashboard/index.html';
 
     const tokenUrl = 'https://signin.laserfiche.com/oauth/token';
     const auth = btoa(`${clientId}:${clientSecret}`);
