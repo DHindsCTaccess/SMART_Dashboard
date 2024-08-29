@@ -48,10 +48,15 @@ header {
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 header h1 {
   margin: 0;
+  padding-right: 40px;
+  /* Adjust this value as needed to center the title */
 }
 
 .logo {
@@ -65,8 +70,8 @@ header h1 {
 }
 
 nav {
-  background-color: #3fa7fd;
-  padding: 10px;
+  background-color: var(--primary-color);
+  padding: 0;
   width: 100%;
   position: fixed;
   top: 60px;
@@ -75,7 +80,7 @@ nav {
 }
 
 main {
-  margin-top: 100px;
+  margin-top: 130px;
   margin-bottom: 50px;
   /* Add margin to account for footer height */
   display: flex;
@@ -109,19 +114,52 @@ nav ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
-  padding-top: 15px;
-  text-align: center;
+  padding-top: 17px;
   display: flex;
   justify-content: center;
+  align-items: stretch;
+  height: 40px;
+  /* Increased height */
 }
 
 nav ul li {
-  margin-right: 10px;
+  margin: 0;
+  display: flex;
+  align-items: center;
 }
 
 nav ul li a {
   color: #fff;
   text-decoration: none;
+  font-size: 16px;
+  /* Maintained font size */
+  font-weight: 500;
+  padding: 0 30px;
+  /* Increased horizontal padding */
+  height: 80%;
+  display: flex;
+  align-items: center;
+  transition: all 0.3s ease;
+  border-radius: 25px;
+}
+
+nav ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+nav ul li a.active {
+  background-color: rgba(255, 255, 255, 0.3);
+  font-weight: 700;
+}
+
+/* Style for the separator */
+nav ul li.separator {
+  color: rgba(255, 255, 255, 0.5);
+  padding: 0 15px;
+  /* Increased padding */
+  font-size: 20px;
+  /* Made separator slightly larger */
+  pointer-events: none;
 }
 
 
@@ -133,7 +171,7 @@ section {
 }
 
 footer {
-  background-color: #004cbddc;
+  background-color: #002f75e7;
   color: white;
   padding: 10px;
   text-align: center;
