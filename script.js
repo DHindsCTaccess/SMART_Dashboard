@@ -325,16 +325,25 @@ async function fetchEmployeeGoals(accessToken) {
     const repositoryId = 'r-618b7d56';  // Replace with your repository ID
     const team = document.getElementById('team-select').value;
     const quarter = document.getElementById('quarter-select').value;
+    const userRole = sessionStorage.getItem('userRole');
 
     let searchCommand = '';
-    if (team === 'all' && quarter === 'all') {
-        searchCommand = '{[SMART Goals]:[Quarter]="*"}';
-    } else if (team === 'all') {
-        searchCommand = `{[SMART Goals]:[Quarter]="${quarter}"}`;
-    } else if (quarter === 'all') {
-        searchCommand = `{[SMART Goals]:[Team]="${team} Team"}`;
+    if (userRole === 'All') {
+        if (team === 'all' && quarter === 'all') {
+            searchCommand = '{[SMART Goals]:[Quarter]="*"}';
+        } else if (team === 'all') {
+            searchCommand = `{[SMART Goals]:[Quarter]="${quarter}"}`;
+        } else if (quarter === 'all') {
+            searchCommand = `{[SMART Goals]:[Team]="${team} Team"}`;
+        } else {
+            searchCommand = `{[SMART Goals]:[Quarter]="${quarter}"} & {[SMART Goals]:[Team]="${team} Team"}`;
+        }
     } else {
-        searchCommand = `{[SMART Goals]:[Quarter]="${quarter}"} & {[SMART Goals]:[Team]="${team} Team"}`;
+        if (quarter === 'all') {
+            searchCommand = `{[SMART Goals]:[Team]="${userRole} Team"}`;
+        } else {
+            searchCommand = `{[SMART Goals]:[Quarter]="${quarter}"} & {[SMART Goals]:[Team]="${userRole} Team"}`;
+        }
     }
 
     const searchUrl = `https://api.laserfiche.com/repository/v2/Repositories/${repositoryId}/SimpleSearches?fields=Name&fields=Team&fields=Quarter&fields=Goal1&fields=Goal2&fields=Goal3&formatFieldValues=false`;
@@ -356,7 +365,7 @@ async function fetchEmployeeGoals(accessToken) {
 
         if (response.ok) {
             const searchResults = await response.json();
-            displayEmployeeGoals(searchResults, team, quarter);
+            displayEmployeeGoals(searchResults, team, quarter, userRole);
         } else if (response.status === 401) {
             refreshToken();
         } else {
@@ -369,7 +378,7 @@ async function fetchEmployeeGoals(accessToken) {
     }
 }
 
-function displayEmployeeGoals(searchResults, selectedTeam, selectedQuarter) {
+function displayEmployeeGoals(searchResults, selectedTeam, selectedQuarter, userRole) {
     const goalsContainer = document.getElementById('goals-container');
     goalsContainer.innerHTML = '';
 
@@ -389,7 +398,8 @@ function displayEmployeeGoals(searchResults, selectedTeam, selectedQuarter) {
         const key = name + '-' + selectedQuarter;
         const result = searchResultsMap.get(key);
 
-        if (selectedTeam === 'all' || team === selectedTeam) {
+        if ((userRole === 'All' && (selectedTeam === 'all' || team === selectedTeam)) ||
+            (userRole !== 'All' && team === userRole)) {
             const goalElement = document.createElement('div');
             goalElement.classList.add('goal-item');
             goalElement.innerHTML = `

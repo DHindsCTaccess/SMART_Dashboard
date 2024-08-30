@@ -1,92 +1,139 @@
-@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,600);
-
-$blue: hsl(206, 72%, 68%);
-$green: hsl(120, 42%, 54%);
-$white: hsl(0, 0%, 100%);
-$grey: hsl(226, 10%, 55%);
-$disa: hsl(226, 15%, 83%);
-
-body {
-    background-color: hsl(0, 0%, 90%);
-
-    font-family: 'Open Sans', sans-serif;
+/* Custom variables */
+:root {
+    --bs-primary: #005ca9;
+    --bs-secondary: #fcb300;
+    --bs-light: #f8f9fa;
+    --bs-dark: #212529;
 }
 
-#steps {
-    width: 505px;
-    margin: 50px auto;
+/* Override Bootstrap variables */
+$primary: var(--bs-primary);
+$secondary: var(--bs-secondary);
+$light: var(--bs-light);
+$dark: var(--bs-dark);
+
+/* Import Bootstrap */
+@import url("https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css");
+
+/* Custom styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--bs-light);
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand img {
+    max-height: 40px;
+}
+
+.nav-link {
+    font-weight: 500;
+}
+
+.nav-link.active {
+    font-weight: 700;
+}
+
+.main-content {
+    margin-top: 76px;
+    padding: 2rem 0;
+}
+
+.card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    transform: translateY(-5px);
+}
+
+.progress {
+    height: 10px;
+    border-radius: 5px;
+}
+
+.goal-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.goal-list li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.goal-list li::before {
+    content: "\2022";
+    color: var(--bs-secondary);
+    font-size: 1.5em;
+    position: absolute;
+    left: 0;
+    top: -0.25rem;
+}
+
+.step-progress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }
 
 .step {
-    width: 40px;
-    height: 40px;
-    background-color: $white;
-    display: inline-block;
-    border: 4px solid;
-    border-color: transparent;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-
-    color: $disa;
-    font-weight: 600;
-    text-align: center;
-    line-height: 35px;
-}
-
-.step:first-child {
-    line-height: 40px;
-}
-
-.step:nth-child(n+2) {
-    margin: 0 0 0 100px;
-    transform: translate(0, -4px);
-}
-
-.step:nth-child(n+2):before {
-    width: 75px;
-    height: 3px;
-    display: block;
-    background-color: $white;
-    transform: translate(-95px, 21px);
-    content: '';
-}
-
-.step:after {
-    width: 150px;
-    display: block;
-    transform: translate(-55px, 3px);
-
-    color: $grey;
-    content: attr(data-desc);
-    font-weight: 400;
-    font-size: 13px;
-}
-
-.step:first-child:after {
-    transform: translate(-55px, -1px);
+    background-color: var(--bs-light);
+    border: 2px solid var(--bs-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: var(--bs-dark);
+    position: relative;
 }
 
 .step.active {
-    border-color: $blue;
-
-    color: $blue;
+    background-color: var(--bs-secondary);
+    color: white;
 }
 
-.step.active:before {
-    background: linear-gradient(to right, $green 0%,
-            $blue 100%);
+.step-label {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin-top: 0.25rem;
+    font-size: 0.7rem;
+    white-space: nowrap;
 }
 
-.step.active:after {
-    color: $blue;
+.step-progress::before {
+    content: '';
+    position: absolute;
+    top: 15px;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background-color: var(--bs-secondary);
+    z-index: -1;
 }
 
-.step.done {
-    background-color: $green;
-    border-color: $green;
-
-    color: $white;
+footer {
+    background-color: var(--bs-primary);
+    color: white;
+    padding: 1rem 0;
 }
 
-.step.done:before {
-    background-color: $green;
+@media (max-width: 768px) {
+    .main-content {
+        margin-top: 56px;
+    }
 }
