@@ -425,3 +425,24 @@ progress[value]::after {
 .progress-item ul li a:hover {
   text-decoration: underline;
 }
+
+.view-goals-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  margin-top: 20px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: -20px;
+}
+
+.view-goals-btn:hover {
+  background-color: #5f97c5;
+}

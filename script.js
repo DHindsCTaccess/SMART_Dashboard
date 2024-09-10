@@ -289,13 +289,13 @@ function displaySearchResults(searchResults, selectedTeam, selectedQuarter) {
         if ((userRole === 'All' || team === userRole) && (selectedTeam === 'all' || team === selectedTeam)) {
             const progressValue = result ? parseFloat(result.progress) : 0;
 
-            let linksHtml = '';
+            let buttonHtml = '';
             if (result && result.id) {
-                linksHtml = `
+                buttonHtml = `
                 <br>
-                    <ul>
-                        <li><a href="https://app.laserfiche.com/laserfiche/DocView.aspx?repo=r-618b7d56&customerId=961460947&id=${result.id}" target="_blank">View Goals in Laserfiche</a></li>
-                        </ul>
+                <button class="view-goals-btn" onclick="window.open('https://app.laserfiche.com/laserfiche/DocView.aspx?repo=r-618b7d56&customerId=961460947&id=${result.id}', '_blank')">
+                    View Goals in Laserfiche
+                </button>
                 `;
             }
 
@@ -311,7 +311,7 @@ function displaySearchResults(searchResults, selectedTeam, selectedQuarter) {
                     <div class="step" data-step="75">4<span class="step-label">Leader Additional Review</span></div>
                     <div class="step" data-step="100">5<span class="step-label">Goals Set!</span></div>
                 </div>
-                ${linksHtml}
+                ${buttonHtml}
             `;
             resultsContainer.appendChild(progressElement);
 
