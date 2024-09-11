@@ -2,7 +2,6 @@ const employees = [
     { name: 'Andrea Jesse', team: 'Admin', progress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Adam Minor', team: 'IT', progress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Andrea Scheid', team: 'Admin', progress: 0, goal1: '', goal2: '', goal3: '' },
-    { name: 'Brian Dean', team: 'BPA', progress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Chad Bulkowski', team: 'IT', progress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Chris Sanders', team: 'IT', progress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Dan Hinds', team: 'BPA', progress: 0, goal1: '', goal2: '', goal3: '' },
