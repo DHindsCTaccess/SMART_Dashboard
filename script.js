@@ -228,7 +228,7 @@ async function performSearch(accessToken) {
         searchCommand = `{[SMART Goals]:[Quarter]="${quarter}"} & {[SMART Goals]:[Team]="${team} Team"}`;
     }
 
-    const searchUrl = `https://api.laserfiche.com/repository/v2/Repositories/${repositoryId}/SimpleSearches?fields=Name&fields=Team&fields=Quarter&fields=Progress&fields=id&formatFieldValues=false`;
+    const searchUrl = `https://api.laserfiche.com/repository/v2/Repositories/${repositoryId}/SimpleSearches?fields=Name&fields=Team&fields=Quarter&fields=Progress&fields=id&fields=pid&formatFieldValues=false`;
 
     const searchData = {
         searchCommand: searchCommand
@@ -277,7 +277,8 @@ function displaySearchResults(searchResults, selectedTeam, selectedQuarter) {
         const quarter = result.fields.find(field => field.name === 'Quarter').values[0];
         const progress = result.fields.find(field => field.name === 'Progress').values[0];
         const id = result.fields.find(field => field.name === 'id').values[0];
-        searchResultsMap.set(name + '-' + quarter, { team, progress, id });
+        const pid = result.fields.find(field => field.name === 'pid').values[0];
+        searchResultsMap.set(name + '-' + quarter, { team, progress, id, pid });
     });
 
     employees.forEach(employee => {
@@ -289,12 +290,29 @@ function displaySearchResults(searchResults, selectedTeam, selectedQuarter) {
             const progressValue = result ? parseFloat(result.progress) : 0;
 
             let buttonHtml = '';
-            if (result && result.id) {
+            if (result) {
+                const goalsBtnHtml = result.id ? `
+                    <button class="view-goals-btn" onclick="window.open('https://app.laserfiche.com/laserfiche/DocView.aspx?repo=r-618b7d56&customerId=961460947&id=${result.id}', '_blank')">
+                        View Goals in Laserfiche
+                    </button>
+                ` : '';
+
+                const reviewBtnHtml = result.pid ? `
+                    <button class="view-review-btn" onclick="window.open('https://app.laserfiche.com/laserfiche/DocView.aspx?repo=r-618b7d56&customerId=961460947&id=${result.pid}', '_blank')">
+                        View Performance Review in Laserfiche
+                    </button>
+                ` : `
+                    <button class="view-review-btn disabled" disabled>
+                        View Performance Review in Laserfiche
+                    </button>
+                `;
+
                 buttonHtml = `
-                <br>
-                <button class="view-goals-btn" onclick="window.open('https://app.laserfiche.com/laserfiche/DocView.aspx?repo=r-618b7d56&customerId=961460947&id=${result.id}', '_blank')">
-                    View Goals in Laserfiche
-                </button>
+                    <br>
+                    <div class="button-container">
+                        ${goalsBtnHtml}
+                        ${reviewBtnHtml}
+                    </div>
                 `;
             }
 
