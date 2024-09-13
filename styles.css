@@ -472,11 +472,8 @@ progress[value]::after {
   flex: 1;
   max-width: 45%;
   margin: 0;
-  /* Remove any default margins */
   line-height: 1.5;
-  /* Standardize line height */
   height: 40px;
-  /* Set a fixed height for both buttons */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -487,12 +484,14 @@ progress[value]::after {
   background-color: #5f97c5;
 }
 
+.view-goals-btn.disabled,
 .view-review-btn.disabled {
   background-color: #cccccc;
-  color: #666666;
+  color: #5f5f5f;
   cursor: not-allowed;
 }
 
+.view-goals-btn.disabled:hover,
 .view-review-btn.disabled:hover {
   background-color: #cccccc;
 }

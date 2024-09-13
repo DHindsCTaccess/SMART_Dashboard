@@ -295,7 +295,11 @@ function displaySearchResults(searchResults, selectedTeam, selectedQuarter) {
                     <button class="view-goals-btn" onclick="window.open('https://app.laserfiche.com/laserfiche/DocView.aspx?repo=r-618b7d56&customerId=961460947&id=${result.id}', '_blank')">
                         View Goals in Laserfiche
                     </button>
-                ` : '';
+                ` : `
+                    <button class="view-goals-btn disabled" disabled>
+                        View Goals in Laserfiche
+                    </button>
+                `;
 
                 const reviewBtnHtml = result.pid ? `
                     <button class="view-review-btn" onclick="window.open('https://app.laserfiche.com/laserfiche/DocView.aspx?repo=r-618b7d56&customerId=961460947&id=${result.pid}', '_blank')">
