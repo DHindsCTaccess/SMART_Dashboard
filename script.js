@@ -8,7 +8,6 @@ const employees = [
     { name: 'Dawn Whitney', team: 'Admin', progress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Gabriel Scheid', team: 'BPA', progress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Jillian Wojtczak', team: 'Admin', progress: 0, goal1: '', goal2: '', goal3: '' },
-    { name: 'Luke Roubik', team: 'IT', progress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Mitchell Milligan', team: 'IT', progress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Mike Ritt', team: 'BPA', progress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Natanyahu Dunn', team: 'IT', progress: 0, goal1: '', goal2: '', goal3: '' },
