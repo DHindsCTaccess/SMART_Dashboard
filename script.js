@@ -1,9 +1,9 @@
-const employees = [
+const DEFAULT_EMPLOYEES = [
     { name: 'Andrea Jesse', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Adam Minor', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Andrea Scheid', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Chad Bulkowski', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-    { name: 'Chris Sanders', team: 'IT', progress: 0, performanceProgress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
+    { name: 'Chris Sanders', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Dan Hinds', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Dawn Whitney', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
     { name: 'Gabriel Scheid', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
@@ -19,20 +19,19 @@ const employees = [
     { name: 'Zach Oxley', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
 ];
 
+const EXCLUDED_EMPLOYEES = [
+    'Vicki Hirschfeld',
+    'Scott Hirschfeld',
+    'Andrea Scheid',
+    'Cassidy Williams'
+];
+
 // This function is to make an API call to Laserfiche in order to get all users from the Employee_Manager lookup table so that we only need to
 // Update that table when we get a new employee. That being said, Laserfiche's API does not trust localhost for its table api, only the repository api,
 // So I have a list of employees here as a fallback for local development and/or as a save for if the api doesn't call. But this shouldnt need to be 
 // updated regularly 
 async function fetchEmployees(accessToken) {
     const employeeUrl = 'https://api.laserfiche.com/odata4/table/Employee_Manager';
-
-    // List of employees to exclude
-    const excludedEmployees = [
-        'Vicki Hirschfeld',
-        'Scott Hirschfeld',
-        'Andrea Scheid',
-        'Cassidy Williams'
-    ];
 
     try {
         const response = await fetch(employeeUrl, {
@@ -71,30 +70,8 @@ async function fetchEmployees(accessToken) {
             }));
     } catch (error) {
         // console.error('Error fetching employees:', error);
-
-        // Filter default employee list as well
-        const defaultEmployees = [
-            { name: 'Andrea Jesse', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Adam Minor', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Andrea Scheid', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Chad Bulkowski', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Chris Sanders', team: 'IT', progress: 0, performanceProgress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Dan Hinds', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Dawn Whitney', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Gabriel Scheid', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Jillian Wojtczak', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Mitchell Milligan', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Mike Ritt', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Natanyahu Dunn', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Nate Osmanski', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Ray Schweissinger', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Taylor Gutzmann', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Tom Paul', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Tom Wielenbeck', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            { name: 'Zach Oxley', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        ].filter(employee => !excludedEmployees.includes(employee.name));
-
-        return defaultEmployees;
+        // Return filtered default employee list
+        return DEFAULT_EMPLOYEES.filter(employee => !EXCLUDED_EMPLOYEES.includes(employee.name));
     }
 }
 
@@ -234,28 +211,8 @@ async function fetchTeamsAndQuarters(accessToken) {
             sessionStorage.setItem('employees', JSON.stringify(employeeData));
         } catch (error) {
             console.error('Error fetching employees:', error);
-            // Use default employee list if fetch fails
-            const defaultEmployees = [
-                { name: 'Andrea Jesse', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Adam Minor', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Andrea Scheid', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Chad Bulkowski', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Chris Sanders', team: 'IT', progress: 0, performanceProgress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Dan Hinds', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Dawn Whitney', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Gabriel Scheid', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Jillian Wojtczak', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Mitchell Milligan', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Mike Ritt', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Natanyahu Dunn', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Nate Osmanski', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Ray Schweissinger', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Taylor Gutzmann', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Tom Paul', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Tom Wielenbeck', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-                { name: 'Zach Oxley', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-            ];
-            sessionStorage.setItem('employees', JSON.stringify(defaultEmployees));
+            // Use default employee list from centralized array
+            sessionStorage.setItem('employees', JSON.stringify(DEFAULT_EMPLOYEES));
         }
 
         const response = await fetch(searchUrl, {
@@ -289,39 +246,13 @@ async function fetchTeamsAndQuarters(accessToken) {
 }
 
 function getEmployees() {
-    const excludedEmployees = [
-        'Vicki Hirschfeld',
-        'Scott Hirschfeld',
-        'Andrea Scheid',
-        'Cassidy Williams'
-    ];
-
     const employeesData = sessionStorage.getItem('employees');
     if (employeesData) {
         const employees = JSON.parse(employeesData);
-        return employees.filter(employee => !excludedEmployees.includes(employee.name));
+        return employees.filter(employee => !EXCLUDED_EMPLOYEES.includes(employee.name));
     }
-    // Return default employee list if nothing in sessionStorage
-    return [
-        { name: 'Andrea Jesse', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Adam Minor', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Andrea Scheid', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Chad Bulkowski', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Chris Sanders', team: 'IT', progress: 0, performanceProgress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Dan Hinds', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Dawn Whitney', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Gabriel Scheid', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Jillian Wojtczak', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Mitchell Milligan', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Mike Ritt', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Natanyahu Dunn', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Nate Osmanski', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Ray Schweissinger', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Taylor Gutzmann', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Tom Paul', team: 'Admin', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Tom Wielenbeck', team: 'BPA', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-        { name: 'Zach Oxley', team: 'IT', progress: 0, performanceProgress: 0, goal1: '', goal2: '', goal3: '' },
-    ];
+    // Return filtered default employee list
+    return DEFAULT_EMPLOYEES.filter(employee => !EXCLUDED_EMPLOYEES.includes(employee.name));
 }
 
 // Function to populate team and quarter dropdowns
